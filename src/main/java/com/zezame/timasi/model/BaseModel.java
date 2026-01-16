@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
-public class BaseModel {
+public abstract class BaseModel {
     @Id
     private String id;
 

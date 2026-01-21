@@ -11,7 +11,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class BaseModel {
     @Id
-    private String id;
+    private UUID id;
 
     @Column
     private LocalDateTime createdAt;
@@ -32,11 +32,11 @@ public abstract class BaseModel {
     public BaseModel() {
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

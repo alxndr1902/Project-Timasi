@@ -1,7 +1,7 @@
 package com.zezame.timasi.config;
 
-import com.projectasmag.asmag.filter.TokenFilter;
-import com.projectasmag.asmag.service.UserService;
+import com.zezame.timasi.filter.TokenFilter;
+import com.zezame.timasi.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

@@ -12,7 +12,8 @@ public class Customer extends User{
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-
+    @Column(length = 100, nullable = false)
+    private String address;
 
     public Customer() {
     }
@@ -31,5 +32,13 @@ public class Customer extends User{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

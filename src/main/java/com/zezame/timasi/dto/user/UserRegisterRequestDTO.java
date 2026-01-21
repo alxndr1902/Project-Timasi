@@ -5,34 +5,26 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UserRegisterRequestDTO {
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "User Full Name Is Required")
+    @Size(max = 50, message = "User Full Name Maximum Length Is 50 Characters")
     private String fullName;
 
-    @Email
-    @NotBlank
-    @Size(max = 20)
+    @Email(message = "Invalid Email Format")
+    @NotBlank(message = "User Email Is Required")
+    @Size(max = 20, message = "User Email Maximum Length Is 20 Characters")
     private String email;
 
-    @NotBlank
-    @Size(max = 20)
+    @NotBlank(message = "User Phone Number Is Required")
+    @Size(max = 20, message = "User Phone Number Maximum Length Is 20 Characters")
     private String phoneNumber;
 
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "User Password Is Required")
+    @Size(max = 50, message = "User Password Maximum Length Is 50 Characters")
     private String password;
 
-    @NotBlank
-    @Size(max = 50)
-    private String confirmPassword;
-
-    @NotBlank
+    @NotBlank(message = "User Role Is Required")
     @Size(min = 36,  max = 36)
     private String roleId;
-
-    public UserRegisterRequestDTO() {
-    }
-
     public String getFullName() {
         return fullName;
     }
@@ -63,14 +55,6 @@ public class UserRegisterRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getRoleId() {

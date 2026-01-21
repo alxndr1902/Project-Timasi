@@ -9,9 +9,13 @@ public class CustomerRegisterRequestDTO extends UserRegisterRequestDTO {
     @Size(max = 20)
     private String identificationNumber;
 
-    @NotBlank
+    @NotBlank(message = "Customer Company Is Required")
     @Size(min = 36, max = 36)
     private String companyId;
+
+    @NotBlank(message = "Customer Address Is Required")
+    @Size(max = 100, message = "Customer Address Maximum Length Is 100 Characters")
+    private String address;
 
     public CustomerRegisterRequestDTO() {
     }

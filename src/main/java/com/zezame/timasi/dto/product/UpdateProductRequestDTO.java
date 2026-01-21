@@ -5,19 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UpdateProductRequestDTO{
-    @NotBlank
-    @Size(max = 20)
+    @NotBlank(message = "Product Code Is Required")
+    @Size(max = 20, message = "Product Code Maximum Length Is 20 Characters")
     private String code;
 
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "Product Name Is Required")
+    @Size(max = 50, message = "Product Name Maximum Length Is 50 Characters")
     private String name;
 
     @NotNull
     private Integer version;
-
-    public UpdateProductRequestDTO() {
-    }
 
     public String getCode() {
         return code;

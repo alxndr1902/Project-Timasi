@@ -2,17 +2,17 @@ package com.zezame.timasi.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class LoginRequestDTO {
-    @Email
-    @NotBlank
+    @Email(message = "Invalid Email Format")
+    @NotBlank(message = "Email Is Required")
+    @Size(max = 20, message = "Email Maximum Length Is 20 Characters")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password Is Required")
+    @Size(max = 50, message = "Password Maximum Length Is 50 Characters")
     private String password;
-
-    public LoginRequestDTO() {
-    }
 
     public String getEmail() {
         return email;

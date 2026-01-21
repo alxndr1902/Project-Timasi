@@ -4,24 +4,21 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class CreateTicketRequestDTO {
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "Ticket Title Is Required")
+    @Size(max = 100, message = "Ticket Title Maximum Length Is 100 Characters")
     private String title;
 
-    @NotBlank
-    @Size(max = 300)
+    @NotBlank(message = "Ticket Description Is Required")
+    @Size(max = 300, message = "Ticket Description Maximum Length Is 300 Characters")
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "Customer Is Required")
     @Size(min = 36, max = 36)
     private String customerId;
 
-    @NotBlank
+    @NotBlank(message = "Assignee Is Required")
     @Size(min = 36, max = 36)
     private String assigneeId;
-
-    public CreateTicketRequestDTO() {
-    }
 
     public String getTitle() {
         return title;

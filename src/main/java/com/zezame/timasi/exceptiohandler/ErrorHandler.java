@@ -59,4 +59,12 @@ public class ErrorHandler {
 
         return new ResponseEntity<>(new ErrorResponseDTO<>(errorMessage),  httpStatus);
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<?> handleForbiddenException(ForbiddenException e) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        var errorMessage = e.getMessage();
+
+        return new ResponseEntity<>(new ErrorResponseDTO<>(errorMessage),  httpStatus);
+    }
 }

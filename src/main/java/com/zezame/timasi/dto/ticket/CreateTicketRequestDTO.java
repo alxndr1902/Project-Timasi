@@ -12,14 +12,6 @@ public class CreateTicketRequestDTO {
     @Size(max = 300, message = "Ticket Description Maximum Length Is 300 Characters")
     private String description;
 
-    @NotBlank(message = "Customer Is Required")
-    @Size(min = 36, max = 36)
-    private String customerId;
-
-    @NotBlank(message = "Assignee Is Required")
-    @Size(min = 36, max = 36)
-    private String assigneeId;
-
     public String getTitle() {
         return title;
     }
@@ -34,21 +26,5 @@ public class CreateTicketRequestDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getAssigneeId() {
-        return assigneeId;
-    }
-
-    public void setAssigneeId(String assigneeId) {
-        this.assigneeId = assigneeId;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.UUID;
 
 public abstract class BaseService {
@@ -41,6 +42,17 @@ public abstract class BaseService {
         } catch (Exception e) {
             throw new RuntimeException("Invalid Format");
         }
+    }
+
+    protected String generateRandomAlphaNumeric() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder result = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 20; i++) {
+            int index = random.nextInt(chars.length());
+            result.append(chars.charAt(index));
+        }
+        return result.toString();
     }
 
     @Autowired

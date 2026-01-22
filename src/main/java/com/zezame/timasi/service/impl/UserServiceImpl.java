@@ -1,7 +1,6 @@
 package com.zezame.timasi.service.impl;
 
 import com.zezame.timasi.constant.Message;
-import com.zezame.timasi.constant.RoleCode;
 import com.zezame.timasi.dto.CreateResponseDTO;
 import com.zezame.timasi.dto.CommonResponseDTO;
 import com.zezame.timasi.dto.UpdateResponseDTO;
@@ -12,8 +11,6 @@ import com.zezame.timasi.dto.user.UserResponseDTO;
 import com.zezame.timasi.exceptiohandler.exception.DataIntegrationException;
 import com.zezame.timasi.exceptiohandler.exception.DuplicateException;
 import com.zezame.timasi.exceptiohandler.exception.NotFoundException;
-import com.zezame.timasi.model.company.Company;
-import com.zezame.timasi.model.company.Role;
 import com.zezame.timasi.model.company.User;
 import com.zezame.timasi.repository.CompanyRepository;
 import com.zezame.timasi.repository.RoleRepository;
@@ -27,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl extends BaseService implements UserService {
@@ -54,21 +50,21 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public List<UserResponseDTO> getUsers(String roleCode) {
         List<User> users = userRepository.findAllByRoleCode(roleCode);
-        List<UserResponseDTO> responses = users.stream()
+        List<UserResponseDTO> dtos = users.stream()
                 .map(this::mapToDto)
                 .toList();
-        return responses;
+        return dtos;
     }
 
     @Override
     public UserResponseDTO getUser(String id) {
-        User user = findUserById(id);
-        UserResponseDTO response = mapToDto(user);
-        return response;
+        var user = findUserById(id);
+        var dto = mapToDto(user);
+        return dto;
     }
 
     private UserResponseDTO mapToDto(User user) {
-        UserResponseDTO dto = new UserResponseDTO(
+        var dto = new UserResponseDTO(
                 user.getId(), user.getFullName(), user.getEmail(),
                 user.getPhoneNumber(), user.getRole().getName(),
                 user.getVersion());
@@ -90,15 +86,15 @@ public class UserServiceImpl extends BaseService implements UserService {
             throw new DuplicateException("Identification Number Is Not Available");
         }
 
-        UUID roleId = convertToUUID(request.getRoleId());
-        Role role = roleRepository.findById(roleId)
+        var roleId = convertToUUID(request.getRoleId());
+        var role = roleRepository.findById(roleId)
                 .orElseThrow(() -> new NotFoundException("Role Not Found"));
 
-        UUID companyId = convertToUUID(request.getCompanyId());
-        Company company = companyRepository.findById(companyId)
+        var companyId = convertToUUID(request.getCompanyId());
+        var company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new NotFoundException("Company Not Found"));
 
-        User user = new User();
+        var user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -112,7 +108,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
     @Override
     public UpdateResponseDTO updateUser(String id, UpdateUserRequestDTO request) {
-        User user = findUserById(id);
+        var user = findUserById(id);
 
         if (!user.getVersion().equals(request.getVersion())) {
             throw new DataIntegrationException("Error Updating User, Please Refresh The Page");
@@ -127,25 +123,25 @@ public class UserServiceImpl extends BaseService implements UserService {
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
 
-        User updatedUser = userRepository.save(prepareUpdate(user));
+        var updatedUser = userRepository.save(prepareUpdate(user));
         return new UpdateResponseDTO(updatedUser.getId(), Message.UPDATED.getName(), updatedUser.getVersion());
     }
 
     @Override
     public CommonResponseDTO deleteUser(String id) {
-        User user = findUserById(id);
+        var user = findUserById(id);
         userRepository.delete(user);
         return new CommonResponseDTO(Message.DELETED.getName());
     }
 
     @Override
     public UpdateResponseDTO changePassword(ChangePasswordRequestDTO request) {
-        User user = findUserById(principalService.getPrincipal().getId());
+        var user = findUserById(principalService.getPrincipal().getId());
         if (!user.getPassword().equals(request.getOldPassword())) {
             throw new DataIntegrationException("Old Password Do Not Match");
         }
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        User updatedUser = userRepository.save(prepareUpdate(user));
+        var updatedUser = userRepository.save(prepareUpdate(user));
         return new UpdateResponseDTO(updatedUser.getId(), Message.UPDATED.getName(), updatedUser.getVersion());
     }
 
@@ -158,8 +154,8 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     private User findUserById(String id) {
-        UUID userId = convertToUUID(id);
-        User user = userRepository.findById(userId)
+        var userId = convertToUUID(id);
+        var user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User Not Found"));
         return user;
     }

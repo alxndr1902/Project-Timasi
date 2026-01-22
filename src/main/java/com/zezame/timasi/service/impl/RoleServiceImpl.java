@@ -9,7 +9,6 @@ import com.zezame.timasi.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RoleServiceImpl extends BaseService implements RoleService {
@@ -22,19 +21,19 @@ public class RoleServiceImpl extends BaseService implements RoleService {
     @Override
     public List<RoleResponseDTO> getRoles() {
         List<Role> roles = roleRepository.findAll();
-        List<RoleResponseDTO> responses = roles.stream()
+        List<RoleResponseDTO> dtos = roles.stream()
                 .map(this::mapToDto)
                 .toList();
-        return responses;
+        return dtos;
     }
 
     @Override
     public RoleResponseDTO getRole(String id) {
-        UUID roleId = convertToUUID(id);
-        Role role = roleRepository.findById(roleId)
+        var roleId = convertToUUID(id);
+        var role = roleRepository.findById(roleId)
                 .orElseThrow(() -> new NotFoundException("Role Is Not Found"));
-        RoleResponseDTO response = mapToDto(role);
-        return response;
+        RoleResponseDTO dto = mapToDto(role);
+        return dto;
     }
 
     private RoleResponseDTO mapToDto(Role role) {

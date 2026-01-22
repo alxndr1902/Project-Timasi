@@ -17,7 +17,6 @@ import com.zezame.timasi.service.CompanyService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CompanyServiceImpl extends BaseService implements CompanyService {
@@ -30,17 +29,17 @@ public class CompanyServiceImpl extends BaseService implements CompanyService {
     @Override
     public List<CompanyResponseDTO> getCompanies() {
         List<Company> companies = companyRepository.findAll();
-        List<CompanyResponseDTO> responses = companies.stream()
+        List<CompanyResponseDTO> dtos = companies.stream()
                 .map(this::mapToDto)
                 .toList();
-        return responses;
+        return dtos;
     }
 
     @Override
     public CompanyResponseDTO getCompanyById(String id) {
-        Company company = findCompanyById(id);
-        CompanyResponseDTO response =  mapToDto(company);
-        return response;
+        var company = findCompanyById(id);
+        var dto =  mapToDto(company);
+        return dto;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class CompanyServiceImpl extends BaseService implements CompanyService {
             throw new DuplicateException("Phone Number Is Not Available");
         }
 
-        Company company = new Company();
+        var company = new Company();
         company.setName(request.getName());
         company.setPhoneNumber(request.getPhoneNumber());
         Company savedCompany = companyRepository.save(prepareCreate(company));
@@ -62,7 +61,7 @@ public class CompanyServiceImpl extends BaseService implements CompanyService {
 
     @Override
     public UpdateResponseDTO updateCompany(String id, UpdateCompanyRequestDTO request) {
-        Company company = findCompanyById(id);
+        var company = findCompanyById(id);
 
         if (!company.getVersion().equals(request.getVersion())) {
             throw new DataIntegrationException("Error Updating Company, Please Refresh The Page");
@@ -90,21 +89,21 @@ public class CompanyServiceImpl extends BaseService implements CompanyService {
 
     @Override
     public CommonResponseDTO deleteCompany(String id) {
-        Company company = findCompanyById(id);
+        var company = findCompanyById(id);
         companyRepository.delete(company);
         return new CommonResponseDTO(Message.DELETED.getName());
     }
 
     private CompanyResponseDTO mapToDto(Company company) {
-        CompanyResponseDTO dto = new CompanyResponseDTO(
+        var dto = new CompanyResponseDTO(
                 company.getId(), company.getName(),
                 company.getPhoneNumber(), company.getVersion());
         return dto;
     }
 
     private Company findCompanyById(String id) {
-        UUID companyId = convertToUUID(id);
-        Company company = companyRepository.findById(companyId)
+        var companyId = convertToUUID(id);
+        var company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new NotFoundException("Company Not Found"));
 
         return company;

@@ -1,10 +1,10 @@
 package com.zezame.timasi.pojo;
 
-public class MailPojo {
+public class CreateTicketMailPojo {
     private String email;
     private String loanCode;
 
-    public MailPojo(String email, String loanCode) {
+    public CreateTicketMailPojo(String email, String loanCode) {
         this.email = email;
         this.loanCode = loanCode;
     }

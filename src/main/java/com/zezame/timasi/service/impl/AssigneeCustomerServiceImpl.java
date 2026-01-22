@@ -6,7 +6,6 @@ import com.zezame.timasi.dto.CommonResponseDTO;
 import com.zezame.timasi.dto.customer.AssigneeCustomerRequestDTO;
 import com.zezame.timasi.exceptiohandler.exception.NotAllowedException;
 import com.zezame.timasi.exceptiohandler.exception.NotFoundException;
-import com.zezame.timasi.model.BaseModel;
 import com.zezame.timasi.model.company.AssigneeCustomer;
 import com.zezame.timasi.model.company.User;
 import com.zezame.timasi.repository.AssigneeCustomerRepository;
@@ -16,7 +15,6 @@ import com.zezame.timasi.service.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AssigneeCustomerServiceImpl extends BaseService implements AssigneeCustomerService {
@@ -30,13 +28,13 @@ public class AssigneeCustomerServiceImpl extends BaseService implements Assignee
 
     @Override
     public CommonResponseDTO setAssignee(AssigneeCustomerRequestDTO request) {
-        User assignee = findAssigneeById(request.getAssigneeId());
+        var assignee = findAssigneeById(request.getAssigneeId());
 
         List<User> users = request.getCustomerIds().stream()
                 .map(this::findCustomerById)
                 .toList();
 
-        for (User customer : users) {
+        for (var customer : users) {
             var assigneeCustomer = new AssigneeCustomer();
             assigneeCustomer.setAssignee(assignee);
             assigneeCustomer.setCustomer(customer);
@@ -68,8 +66,8 @@ public class AssigneeCustomerServiceImpl extends BaseService implements Assignee
     }
 
     private User findCustomerById(String id) {
-        UUID customerId = convertToUUID(id);
-        User user = userRepository.findById(customerId)
+        var customerId = convertToUUID(id);
+        var user = userRepository.findById(customerId)
                 .orElseThrow(() -> new NotFoundException("User Not Found"));
         if (!user.getRole().getCode().equals(RoleCode.CUST.name())) {
             throw new NotAllowedException("Invalid Customer");
@@ -78,8 +76,8 @@ public class AssigneeCustomerServiceImpl extends BaseService implements Assignee
     }
 
     private User findAssigneeById(String id) {
-        UUID assigneeId = convertToUUID(id);
-        User assignee = userRepository.findById(assigneeId)
+        var assigneeId = convertToUUID(id);
+        var assignee = userRepository.findById(assigneeId)
                 .orElseThrow(() -> new NotFoundException("Assignee Not Found"));
         if (!assignee.getRole().getCode().equals(RoleCode.PIC.name())) {
             throw new NotAllowedException("Invalid Assignee");

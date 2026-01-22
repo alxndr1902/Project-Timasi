@@ -9,7 +9,6 @@ import com.zezame.timasi.service.TicketStatusService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TicketStatusServiceImpl extends BaseService implements TicketStatusService {
@@ -22,23 +21,23 @@ public class TicketStatusServiceImpl extends BaseService implements TicketStatus
     @Override
     public List<TicketStatusResponseDTO> getTicketStatus() {
         List<TicketStatus> ticketStatus = ticketStatusRepository.findAll();
-        List<TicketStatusResponseDTO> responses = ticketStatus.stream()
+        List<TicketStatusResponseDTO> dtos = ticketStatus.stream()
                 .map(this::mapToDto)
                 .toList();
-        return responses;
+        return dtos;
     }
 
     @Override
     public TicketStatusResponseDTO getTicketStatus(String id) {
-        UUID ticketStatusId = convertToUUID(id);
-        TicketStatus ticketStatus = ticketStatusRepository.findById(ticketStatusId)
+        var ticketStatusId = convertToUUID(id);
+        var ticketStatus = ticketStatusRepository.findById(ticketStatusId)
                 .orElseThrow(() -> new NotFoundException("Ticket Status Is Not Found"));
-        TicketStatusResponseDTO response = mapToDto(ticketStatus);
-        return response;
+        TicketStatusResponseDTO dto = mapToDto(ticketStatus);
+        return dto;
     }
 
     private TicketStatusResponseDTO mapToDto(TicketStatus ticketStatus) {
-        TicketStatusResponseDTO dto = new TicketStatusResponseDTO(
+        var dto = new TicketStatusResponseDTO(
                 ticketStatus.getId(), ticketStatus.getCode(), ticketStatus.getName());
 
         return dto;

@@ -62,7 +62,15 @@ public class ErrorHandler {
 
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<?> handleForbiddenException(ForbiddenException e) {
-        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+        var errorMessage = e.getMessage();
+
+        return new ResponseEntity<>(new ErrorResponseDTO<>(errorMessage),  httpStatus);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException e) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
         var errorMessage = e.getMessage();
 
         return new ResponseEntity<>(new ErrorResponseDTO<>(errorMessage),  httpStatus);

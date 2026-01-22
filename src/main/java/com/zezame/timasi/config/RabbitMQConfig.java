@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    public static final String EMAIL_EX_CO = "email.notification.exchange.co";
-    public static final String EMAIL_QUEUE_CO = "email.notification.queue.co";
-    public static final String EMAIL_ROUTING_KEY_CO = "email.notification.key.co";
+    public static final String EMAIL_EX_CR = "email.notification.exchange.cr";
+    public static final String EMAIL_QUEUE_CR = "email.notification.queue.cr";
+    public static final String EMAIL_ROUTING_KEY_CR = "email.notification.key.cr";
 
-    public static final String EMAIL_EX_CI = "email.notification.exchange.ci";
-    public static final String EMAIL_QUEUE_CI = "email.notification.queue.ci";
-    public static final String EMAIL_ROUTING_KEY_CI = "email.notification.key.ci";
+    public static final String EMAIL_EX_UD = "email.notification.exchange.ud";
+    public static final String EMAIL_QUEUE_UD = "email.notification.queue.ud";
+    public static final String EMAIL_ROUTING_KEY_UD = "email.notification.key.ud";
 
     @Bean
     public MessageConverter jsonMessageConverter() {
@@ -23,35 +23,35 @@ public class RabbitMQConfig {
 
     @Bean
     public DirectExchange checkoutExchange() {
-        return new DirectExchange(EMAIL_EX_CO);
+        return new DirectExchange(EMAIL_EX_CR);
     }
 
     @Bean
     public DirectExchange checkInExchange() {
-        return new DirectExchange(EMAIL_EX_CI);
+        return new DirectExchange(EMAIL_EX_UD);
     }
 
     @Bean
     public Queue checkInQueue() {
-        return QueueBuilder.durable(EMAIL_QUEUE_CI).build();
+        return QueueBuilder.durable(EMAIL_QUEUE_UD).build();
     }
 
     @Bean
     public Queue checkoutQueue() {
-        return QueueBuilder.durable(EMAIL_QUEUE_CO).build();
+        return QueueBuilder.durable(EMAIL_QUEUE_CR).build();
     }
 
     @Bean
     public Binding checkoutBinding() {
         return BindingBuilder.bind(checkoutQueue())
                 .to(checkoutExchange())
-                .with(EMAIL_ROUTING_KEY_CO);
+                .with(EMAIL_ROUTING_KEY_CR);
     }
 
     @Bean
     public Binding checkInBinding() {
         return BindingBuilder.bind(checkInQueue())
                 .to(checkInExchange())
-                .with(EMAIL_ROUTING_KEY_CI);
+                .with(EMAIL_ROUTING_KEY_UD);
     }
 }

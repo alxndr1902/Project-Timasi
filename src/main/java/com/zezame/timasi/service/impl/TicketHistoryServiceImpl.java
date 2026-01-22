@@ -1,6 +1,7 @@
 package com.zezame.timasi.service.impl;
 
 import com.zezame.timasi.dto.ticket.TicketHistoryResponseDTO;
+import com.zezame.timasi.exceptiohandler.exception.NotFoundException;
 import com.zezame.timasi.model.ticket.TicketHistory;
 import com.zezame.timasi.repository.TicketHistoryRepository;
 import com.zezame.timasi.service.BaseService;
@@ -20,15 +21,19 @@ public class TicketHistoryServiceImpl extends BaseService implements TicketHisto
     @Override
     public List<TicketHistoryResponseDTO> getTicketHistoriesByCustomerId(String customerId) {
         List<TicketHistory> ticketHistories = ticketHistoryRepository.findAll();
-        List<TicketHistoryResponseDTO> responses = ticketHistories.stream()
+        List<TicketHistoryResponseDTO> dtos = ticketHistories.stream()
                 .map(this::mapToDto)
                 .toList();
-        return responses;
+        return dtos;
     }
 
     @Override
     public TicketHistoryResponseDTO getTicketHistoryById(String id) {
-        return null;
+        var ticketHistoryId = convertToUUID(id);
+        var ticketHistory = ticketHistoryRepository.findById(ticketHistoryId)
+                .orElseThrow(() -> new NotFoundException("History Not Found"));
+        var dto = mapToDto(ticketHistory);
+        return dto;
     }
 
     private TicketHistoryResponseDTO mapToDto(TicketHistory ticketHistory) {

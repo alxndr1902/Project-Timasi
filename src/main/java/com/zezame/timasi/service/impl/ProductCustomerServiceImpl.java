@@ -17,7 +17,6 @@ import com.zezame.timasi.service.ProductCustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProductCustomerServiceImpl extends BaseService implements ProductCustomerService {
@@ -72,8 +71,8 @@ public class ProductCustomerServiceImpl extends BaseService implements ProductCu
     }
 
     private User findCustomerById(String id) {
-        UUID userId = convertToUUID(id);
-        User user = userRepository.findById(userId)
+        var userId = convertToUUID(id);
+        var user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User Not Found"));
         if (!user.getRole().getCode().equals(RoleCode.CUST.name())) {
             throw new NotAllowedException("Invalid Customer");
@@ -82,7 +81,7 @@ public class ProductCustomerServiceImpl extends BaseService implements ProductCu
     }
 
     private Product findProductById(String id) {
-        UUID productId = convertToUUID(id);
+        var productId = convertToUUID(id);
         var product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product Not Found"));
         return product;

@@ -15,11 +15,11 @@ public interface TicketService {
 
     UpdateResponseDTO  updateTicket(String request, String statusCode);
 
-    List<TicketMessageResponseDTO> getTicketMessages(String id);
+    List<TicketMessageResponseDTO> getTicketMessages(String ticketId);
 
-    TicketMessageResponseDTO getTicketMessage(String ticketId, String id);
+    TicketMessageResponseDTO getTicketMessage(String id);
 
     CreateResponseDTO createTicketMesage(String ticketId, CreateTicketMessageRequestDTO request);
 
-    UpdateResponseDTO updateTicketMesage(String ticketId, String id, UpdateTicketMessageRequestDTO request);
+    UpdateResponseDTO updateTicketMesage(String id, UpdateTicketMessageRequestDTO request);
 }

@@ -3,7 +3,9 @@ package com.zezame.timasi.util;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EmailUtil {
     private final JavaMailSender mailSender;
 

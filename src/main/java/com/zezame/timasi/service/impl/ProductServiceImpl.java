@@ -17,7 +17,6 @@ import com.zezame.timasi.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProductServiceImpl extends BaseService implements ProductService {
@@ -30,17 +29,17 @@ public class ProductServiceImpl extends BaseService implements ProductService {
     @Override
     public List<ProductResponseDTO> getProducts() {
         List<Product> products = productRepository.findAll();
-        List<ProductResponseDTO> responses = products.stream()
+        List<ProductResponseDTO> dtos = products.stream()
                 .map(this::mapToDto)
                 .toList();
-        return responses;
+        return dtos;
     }
 
     @Override
     public ProductResponseDTO getProductById(String id) {
-        Product product = findProductById(id);
-        ProductResponseDTO response = mapToDto(product);
-        return response;
+        var product = findProductById(id);
+        ProductResponseDTO dto = mapToDto(product);
+        return dto;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class ProductServiceImpl extends BaseService implements ProductService {
         if (productRepository.existsByCode(request.getCode())) {
             throw new DuplicateException("Product Already Exists");
         }
-        Product product = new Product();
+        var product = new Product();
         product.setCode(request.getCode());
         product.setName(request.getName());
         Product savedProduct = productRepository.save(prepareCreate(product));
@@ -57,7 +56,7 @@ public class ProductServiceImpl extends BaseService implements ProductService {
 
     @Override
     public UpdateResponseDTO updateProduct(String id, UpdateProductRequestDTO request) {
-        Product product = findProductById(id);
+        var product = findProductById(id);
 
         if (!product.getVersion().equals(request.getVersion())) {
             throw new DataIntegrationException("Error Updating Product, Please Refresh The Page");
@@ -78,7 +77,7 @@ public class ProductServiceImpl extends BaseService implements ProductService {
 
     @Override
     public CommonResponseDTO deleteProduct(String id) {
-        Product product = findProductById(id);
+        var product = findProductById(id);
         productRepository.delete(product);
         return new CommonResponseDTO(Message.DELETED.getName());
     }
@@ -91,8 +90,8 @@ public class ProductServiceImpl extends BaseService implements ProductService {
     }
 
     private Product findProductById(String id) {
-        UUID productId = convertToUUID(id);
-        Product product = productRepository.findById(productId)
+        var productId = convertToUUID(id);
+        var product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Prduct Not Found"));
         return product;
     }

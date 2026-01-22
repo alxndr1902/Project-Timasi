@@ -3,7 +3,6 @@ package com.zezame.timasi.controller;
 import com.zezame.timasi.dto.CreateResponseDTO;
 import com.zezame.timasi.dto.UpdateResponseDTO;
 import com.zezame.timasi.dto.ticket.*;
-import com.zezame.timasi.model.ticket.TicketMessage;
 import com.zezame.timasi.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -53,9 +52,8 @@ public class TicketController {
     }
 
     @GetMapping("{ticketId}/messages/{id}")
-    public ResponseEntity<TicketMessageResponseDTO> getTicketMessage(@PathVariable String ticketId,
-                                                                     @PathVariable String id) {
-        TicketMessageResponseDTO response = ticketService.getTicketMessage(ticketId, id);
+    public ResponseEntity<TicketMessageResponseDTO> getTicketMessage(@PathVariable String id) {
+        TicketMessageResponseDTO response = ticketService.getTicketMessage(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -67,10 +65,9 @@ public class TicketController {
     }
 
     @PatchMapping("{ticketId}/messages/{id}")
-    public ResponseEntity<UpdateResponseDTO> updateTicketMessage(@PathVariable String ticketId,
-                                                                 @PathVariable String id,
+    public ResponseEntity<UpdateResponseDTO> updateTicketMessage(@PathVariable String id,
                                                                  @Valid @RequestBody UpdateTicketMessageRequestDTO request) {
-        UpdateResponseDTO response = ticketService.updateTicketMesage(ticketId, id, request);
+        UpdateResponseDTO response = ticketService.updateTicketMesage(id, request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

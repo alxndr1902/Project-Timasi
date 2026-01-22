@@ -1,7 +1,7 @@
 package com.zezame.timasi.filter;
 
 import com.zezame.timasi.pojo.AuthorizationPojo;
-import com.zezame.timasi.util.JwtUtil;
+import com.zezame.timasi.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +19,11 @@ import java.util.List;
 @Component
 public class TokenFilter extends OncePerRequestFilter {
     private final List<RequestMatcher> requestMatchers;
+    private final JwtService jwtService;
 
-    public TokenFilter(List<RequestMatcher> requestMatchers) {
+    public TokenFilter(List<RequestMatcher> requestMatchers, JwtService jwtService) {
         this.requestMatchers = requestMatchers;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class TokenFilter extends OncePerRequestFilter {
             var token = authHeader.substring(7);
 
             try {
-                var claims = JwtUtil.validateToken(token);
+                var claims = jwtService.validateToken(token);
 
                 var data = new AuthorizationPojo(claims.get("id").toString());
 

@@ -51,4 +51,12 @@ public class ErrorHandler {
 
         return new ResponseEntity<>(new ErrorResponseDTO<>(errorMessage),  httpStatus);
     }
+
+    @ExceptionHandler(NotAllowedException.class)
+    public ResponseEntity<?> handleNotAllowedException(NotAllowedException e) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        var errorMessage = e.getMessage();
+
+        return new ResponseEntity<>(new ErrorResponseDTO<>(errorMessage),  httpStatus);
+    }
 }

@@ -12,11 +12,18 @@ public class User extends BaseModel {
     @Column(length = 20, nullable = false, unique = true)
     private String email;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String password;
 
     @Column(length = 20, nullable = false, unique = true)
     private String phoneNumber;
+
+    @Column(length = 20, nullable = false, unique = true)
+    private String identificationNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
@@ -55,6 +62,22 @@ public class User extends BaseModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getIdentificationNumber() {
+        return identificationNumber;
+    }
+
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Role getRole() {

@@ -25,7 +25,7 @@ public abstract class BaseService {
         return model;
     }
 
-    protected UUID getId(String request) {
+    protected UUID convertToUUID(String request) {
         try {
             return UUID.fromString(request);
         } catch (IllegalArgumentException e) {

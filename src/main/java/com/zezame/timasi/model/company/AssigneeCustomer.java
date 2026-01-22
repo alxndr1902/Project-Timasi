@@ -4,8 +4,7 @@ import com.zezame.timasi.model.BaseModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "assignees_customers", uniqueConstraints = @UniqueConstraint(
-        columnNames = {"assignee_id", "customer_id"}))
+@Table(name = "assignees_customers")
 public class AssigneeCustomer extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "assignee_id", nullable = false)
@@ -13,7 +12,7 @@ public class AssigneeCustomer extends BaseModel {
 
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private User customer;
 
     public AssigneeCustomer() {
     }
@@ -26,11 +25,11 @@ public class AssigneeCustomer extends BaseModel {
         this.assignee = assignee;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
 }

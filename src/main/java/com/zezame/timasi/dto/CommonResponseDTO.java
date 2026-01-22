@@ -1,9 +1,9 @@
 package com.zezame.timasi.dto;
 
-public class DeleteResponseDTO {
+public class CommonResponseDTO {
     private final String message;
 
-    public DeleteResponseDTO(String message) {
+    public CommonResponseDTO(String message) {
         this.message = message;
     }
 

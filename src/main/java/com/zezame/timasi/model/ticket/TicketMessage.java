@@ -3,12 +3,11 @@ package com.zezame.timasi.model.ticket;
 import com.zezame.timasi.model.BaseModel;
 import com.zezame.timasi.model.company.User;
 import jakarta.persistence.*;
-import org.hibernate.Length;
 
 @Entity
 @Table(name = "ticket_messages")
 public class TicketMessage extends BaseModel {
-    @Column(length = Length.LONG32, nullable = false)
+    @Column(nullable = false)
     private String message;
 
     @ManyToOne

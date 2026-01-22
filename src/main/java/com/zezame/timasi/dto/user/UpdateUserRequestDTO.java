@@ -6,18 +6,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UpdateUserRequestDTO {
-    @NotBlank(message = "User Full Name Is Required")
-    @Size(max = 50, message = "User Full Name Maximum Length Is 50 Characters")
+    @NotBlank(message = "Full Name Is Required")
+    @Size(max = 50, message = "Full Name Maximum Length Is 50 Characters")
     private String fullName;
 
+    @NotBlank(message = "Email Is Required")
     @Email(message = "Invalid Email Format")
-    @NotBlank(message = "User Email Is Required")
-    @Size(max = 20, message = "User Email Maximum Length Is 20 Characters")
+    @Size(max = 20, message = "Email Maximum Length Is 20 Characters")
     private String email;
-
-    @NotBlank(message = "User Phone Number Is Required")
-    @Size(max = 20, message = "User Phone Number Maximum Length Is 20 Characters")
-    private String phoneNumber;
 
     @NotNull
     private Integer version;
@@ -36,14 +32,6 @@ public class UpdateUserRequestDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public Integer getVersion() {

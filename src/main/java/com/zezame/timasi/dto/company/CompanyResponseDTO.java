@@ -3,17 +3,16 @@ package com.zezame.timasi.dto.company;
 import java.util.UUID;
 
 public class CompanyResponseDTO {
-    private UUID id;
-    private String name;
-    private String phoneNumber;
+    private final UUID id;
+    private final String name;
+    private final String phoneNumber;
+    private final Integer version;
 
-    public CompanyResponseDTO(UUID id, String name, String phoneNumber) {
+    public CompanyResponseDTO(UUID id, String name, String phoneNumber, Integer version) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
-    }
-
-    public CompanyResponseDTO() {
+        this.version = version;
     }
 
     public UUID getId() {
@@ -26,5 +25,9 @@ public class CompanyResponseDTO {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 }

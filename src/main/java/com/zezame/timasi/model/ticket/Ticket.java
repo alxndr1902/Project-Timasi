@@ -1,7 +1,6 @@
 package com.zezame.timasi.model.ticket;
 
 import com.zezame.timasi.model.BaseModel;
-import com.zezame.timasi.model.company.Customer;
 import com.zezame.timasi.model.company.User;
 import jakarta.persistence.*;
 
@@ -19,7 +18,7 @@ public class Ticket extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private User customer;
 
     @ManyToOne
     @JoinColumn(name = "asssignee_id", nullable = false)
@@ -53,11 +52,11 @@ public class Ticket extends BaseModel {
         this.description = description;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
 
